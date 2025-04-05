@@ -1,100 +1,113 @@
 
-<?xml version="1.0" encoding="UTF-8" ?>
-<b:template xmlns:b="http://www.google.com/2005/gml/b">
-  <b:skin><![CDATA[
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AnimeFlix</title>
+  <style>
     body {
-      background-color: #141414;
-      color: #fff;
-      font-family: Arial, sans-serif;
       margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #141414;
+      color: white;
     }
-    .header {
-      height: 300px;
-      background: url('https://i.imgur.com/x8vXgqg.jpg') center/cover no-repeat;
-    }
-    .content {
+    header {
+      background: #000;
       padding: 20px;
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      color: #e50914;
     }
-    .grid {
+    .catalogo {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 20px;
+      justify-content: center;
+      padding: 20px;
     }
-    .anime {
-      background: #222;
-      border-radius: 8px;
-      width: 160px;
-      overflow: hidden;
-      text-align: center;
-      padding-bottom: 10px;
-    }
-    .anime img {
-      width: 100%;
-      height: auto;
-    }
-    .anime-title {
+    .anime-card {
+      background: #1f1f1f;
+      width: 200px;
+      border-radius: 10px;
       padding: 10px;
+    }
+    .anime-card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .anime-card h3 {
+      font-size: 16px;
+      margin: 10px 0 5px;
+    }
+    .anime-card p {
+      color: #bbb;
       font-size: 14px;
+      margin: 0 0 10px;
     }
-    .anime-title a {
+    .anime-card a {
+      background: #e50914;
+      color: white;
+      padding: 5px 10px;
+      text-decoration: none;
+      border-radius: 5px;
       display: inline-block;
-      margin-top: 5px;
-      color: #00f;
-      text-decoration: underline;
     }
-  ]]></b:skin>
+  </style>
+</head>
+<body>
 
-  <b:section id='main' class='main' maxwidgets='1' showaddelement='yes'>
-    <b:widget id='AnimeWidget' locked='false' title='AnimeFlix' type='HTML'>
-      <b:widget-settings>
-        <b:widget-setting name='content'>
-          <![CDATA[
-            <div class="header"></div>
-            <div class="content">
-              <h2>Populares</h2>
-              <div class="grid">
+<header>AnimeFlix</header>
 
-                <div class="anime">
-                  <img src="https://i.imgur.com/Uz4FZ7b.jpeg" alt="Konosuba">
-                  <div class="anime-title">
-                    <strong>Konosuba</strong><br>
-                    <small>2024 • Comédia, Fantasia</small><br>
-                    <a href="https://exemplo.com/konosuba">Assistir</a>
-                  </div>
-                </div>
+<div class="catalogo" id="catalogo">
+  <!-- Animes vão aparecer aqui -->
+</div>
 
-                <div class="anime">
-                  <img src="https://i.imgur.com/ye3Z1lQ.jpeg" alt="Kanojo, Okarishimasu">
-                  <div class="anime-title">
-                    <strong>Kanojo, Okarishimasu</strong><br>
-                    <small>2023 • Romance, Comédia</small><br>
-                    <a href="https://exemplo.com/kanojo">Assistir</a>
-                  </div>
-                </div>
+<script>
+  const animes = [
+    {
+      titulo: "Konosuba",
+      imagem: "https://upload.wikimedia.org/wikipedia/en/2/2d/KonoSuba_light_novel_vol_1_cover.jpg",
+      genero: "Comédia, Fantasia",
+      ano: "2016",
+      link: "https://www.example.com/konosuba"
+    },
+    {
+      titulo: "Kanojo, Okarishimasu",
+      imagem: "https://upload.wikimedia.org/wikipedia/en/5/5b/Rent-A-Girlfriend_volume_1_cover.jpg",
+      genero: "Romance, Comédia",
+      ano: "2020",
+      link: "https://www.example.com/kanojo"
+    },
+    {
+      titulo: "Blue Box",
+      imagem: "https://upload.wikimedia.org/wikipedia/en/2/22/Blue_Box_manga_volume_1_cover.jpg",
+      genero: "Esporte, Romance",
+      ano: "2021",
+      link: "https://www.example.com/bluebox"
+    },
+    {
+      titulo: "Hunter × Hunter",
+      imagem: "https://upload.wikimedia.org/wikipedia/en/9/9b/Hunter_Hunter_cover.gif",
+      genero: "Ação, Aventura",
+      ano: "1999",
+      link: "https://www.example.com/hunterxhunter"
+    }
+  ];
 
-                <div class="anime">
-                  <img src="https://i.imgur.com/mMuZ3HG.jpeg" alt="Blue Box">
-                  <div class="anime-title">
-                    <strong>Blue Box</strong><br>
-                    <small>2023 • Esporte, Romance</small><br>
-                    <a href="https://exemplo.com/bluebox">Assistir</a>
-                  </div>
-                </div>
+  let html = "";
+  animes.forEach(a => {
+    html += `
+      <div class="anime-card">
+        <img src="${a.imagem}" alt="${a.titulo}">
+        <h3>${a.titulo}</h3>
+        <p>${a.genero} - ${a.ano}</p>
+        <a href="${a.link}" target="_blank">Assistir</a>
+      </div>
+    `;
+  });
+  document.getElementById("catalogo").innerHTML = html;
+</script>
 
-                <div class="anime">
-                  <img src="https://i.imgur.com/yGC8c5P.jpeg" alt="Hunter × Hunter">
-                  <div class="anime-title">
-                    <strong>Hunter × Hunter</strong><br>
-                    <small>2011 • Ação, Aventura</small><br>
-                    <a href="https://exemplo.com/hunter">Assistir</a>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-          ]]>
-        </b:widget-setting>
-      </b:widget-settings>
-    </b:widget>
-  </b:section>
-</b:template>
+</body>
+</html>
