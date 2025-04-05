@@ -29,6 +29,8 @@
       margin: 5px;
       width: 90%;
       max-width: 400px;
+      border: none;
+      border-radius: 5px;
     }
     .anime-list {
       display: flex;
@@ -70,9 +72,25 @@
   <div class="anime-list" id="anime-list"></div>
 
   <script>
-    async function carregarAnimes() {
-      const response = await fetch('animes.json');
-      const animes = await response.json();
+    const animes = [
+      {
+        nome: "Naruto",
+        imagem: "https://cdn.myanimelist.net/images/anime/13/17405.jpg",
+        video: "https://meuservidor.com/videos/naruto-ep1.mp4"
+      },
+      {
+        nome: "One Piece",
+        imagem: "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
+        video: "https://meuservidor.com/videos/onepiece-ep1.mp4"
+      },
+      {
+        nome: "Attack on Titan",
+        imagem: "https://cdn.myanimelist.net/images/anime/10/47347.jpg",
+        video: "https://meuservidor.com/videos/aot-ep1.mp4"
+      }
+    ];
+
+    function carregarAnimes() {
       const lista = document.getElementById('anime-list');
       lista.innerHTML = '';
       animes.forEach(anime => {
@@ -90,22 +108,18 @@
       });
     }
 
-    async function adicionarAnime() {
-      const nome = document.getElementById('anime-nome').value;
-      const imagem = document.getElementById('anime-imagem').value;
-      const video = document.getElementById('anime-video').value;
+    function adicionarAnime() {
+      const nome = document.getElementById("anime-nome").value;
+      const imagem = document.getElementById("anime-imagem").value;
+      const video = document.getElementById("anime-video").value;
 
-      const response = await fetch('animes.json');
-      const animes = await response.json();
-      animes.push({ nome, imagem, video });
-
-      await fetch('salvar.php', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(animes)
-      });
-
-      carregarAnimes();
+      if (nome && imagem && video) {
+        animes.push({ nome, imagem, video });
+        carregarAnimes();
+        alert("Anime adicionado! (temporário, não salva no GitHub)");
+      } else {
+        alert("Preencha todos os campos!");
+      }
     }
 
     window.onload = carregarAnimes;
