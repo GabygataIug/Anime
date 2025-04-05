@@ -1,175 +1,114 @@
-<!DOCTYPE html>
+
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AnimeFlix</title>
   <style>
-    * { box-sizing: border-box; }
     body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #121212;
+      background-color: #121212;
       color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
     }
-    header {
-      background: #000;
+    .header {
+      background-color: #1c1c1c;
+      padding: 15px;
+      text-align: center;
+      font-size: 24px;
+      color: orange;
+    }
+    .painel {
+      background-color: #1e1e1e;
       padding: 20px;
       text-align: center;
-      font-size: 2rem;
-      font-weight: bold;
-      color: #f97316;
-      letter-spacing: 1px;
     }
-    #search {
-      display: block;
-      margin: 20px auto;
-      padding: 12px 15px;
-      font-size: 16px;
-      width: 90%;
-      max-width: 500px;
-      border: none;
-      border-radius: 8px;
-      background: #222;
-      color: white;
-    }
-    #anime-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
-      padding: 20px;
-    }
-    .anime-card {
-      background: #1e1e1e;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.6);
-      transition: transform 0.2s;
-    }
-    .anime-card:hover {
-      transform: scale(1.05);
-    }
-    .anime-card img {
-      width: 100%;
-      height: 280px;
-      object-fit: cover;
-    }
-    .info {
+    .painel input, .painel button {
       padding: 10px;
+      margin: 5px;
+      width: 90%;
+      max-width: 400px;
     }
-    .info h3 {
-      margin: 0 0 8px;
-      font-size: 1.1rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .episodes {
+    .anime-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      justify-content: center;
+      gap: 20px;
+      padding: 20px;
     }
-    .episodes button {
-      flex: 1;
-      background: #f97316;
-      border: none;
-      padding: 6px 10px;
-      color: white;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 0.85rem;
+    .anime-item {
+      background-color: #222;
+      border-radius: 8px;
+      overflow: hidden;
+      width: 300px;
+      text-align: center;
+      padding: 10px;
     }
-    .episodes button:hover {
-      background: #fb923c;
+    .anime-item img {
+      width: 100%;
+      border-radius: 5px;
     }
-    @media (max-width: 600px) {
-      .anime-card img {
-        height: 200px;
-      }
+    video {
+      width: 100%;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
+  <div class="header">AnimeFlix</div>
 
-  <header>AnimeFlix</header>
-  <input type="text" id="search" placeholder="Buscar anime..." oninput="filtrarAnimes()" />
-  <section id="anime-list"></section>
+  <div class="painel">
+    <h2>Adicionar Novo Anime</h2>
+    <input type="text" id="anime-nome" placeholder="Nome do Anime" /><br>
+    <input type="text" id="anime-imagem" placeholder="URL da Imagem" /><br>
+    <input type="text" id="anime-video" placeholder="URL do Episódio MP4" /><br>
+    <button onclick="adicionarAnime()">Adicionar</button>
+  </div>
+
+  <h2 style="text-align:center">Últimos Lançamentos</h2>
+  <div class="anime-list" id="anime-list"></div>
 
   <script>
-    const animes = [
-      {
-        nome: "Attack on Titan",
-        imagem: "https://cdn.myanimelist.net/images/anime/10/47347.jpg",
-        episodios: [
-          "https://www.youtube.com/embed/MGRm4IzK1SQ",
-          "https://www.youtube.com/embed/8OkpRK2_gVs"
-        ]
-      },
-      {
-        nome: "Demon Slayer",
-        imagem: "https://cdn.myanimelist.net/images/anime/1286/99889.jpg",
-        episodios: [
-          "https://www.youtube.com/embed/VQGCKyvzIM4",
-          "https://www.youtube.com/embed/OL8HyJekyCU"
-        ]
-      },
-      {
-        nome: "Jujutsu Kaisen",
-        imagem: "https://cdn.myanimelist.net/images/anime/1171/109222.jpg",
-        episodios: [
-          "https://www.youtube.com/embed/aPz5FWWtLOI",
-          "https://www.youtube.com/embed/kY7Z9NgnxJU"
-        ]
-      },
-      {
-        nome: "Naruto Shippuden",
-        imagem: "https://cdn.myanimelist.net/images/anime/5/17407.jpg",
-        episodios: [
-          "https://www.youtube.com/embed/dnYweLzQdMM",
-          "https://www.youtube.com/embed/NDjC8jJ8-hE"
-        ]
-      }
-    ];
-
-    const container = document.getElementById("anime-list");
-
-    function renderizarAnimes(lista) {
-      container.innerHTML = "";
-      lista.forEach(anime => {
-        const card = document.createElement("div");
-        card.className = "anime-card";
-        card.innerHTML = `
-          <img src="${anime.imagem}" alt="${anime.nome}">
-          <div class="info">
-            <h3>${anime.nome}</h3>
-            <div class="episodes">
-              ${anime.episodios.map((ep, i) => `<button onclick="assistir('${ep}')">Ep ${i + 1}</button>`).join("")}
-            </div>
-          </div>
+    async function carregarAnimes() {
+      const response = await fetch('animes.json');
+      const animes = await response.json();
+      const lista = document.getElementById('anime-list');
+      lista.innerHTML = '';
+      animes.forEach(anime => {
+        const item = document.createElement('div');
+        item.className = 'anime-item';
+        item.innerHTML = `
+          <img src="${anime.imagem}" alt="${anime.nome}" />
+          <h3>${anime.nome}</h3>
+          <video controls>
+            <source src="${anime.video}" type="video/mp4">
+            Seu navegador não suporta vídeo.
+          </video>
         `;
-        container.appendChild(card);
+        lista.appendChild(item);
       });
     }
 
-    function assistir(link) {
-      const player = window.open("", "_blank");
-      player.document.write(`
-        <html><head><title>Assistir</title></head>
-        <body style="margin:0;background:#000;">
-          <iframe width="100%" height="100%" src="${link}" frameborder="0" allowfullscreen></iframe>
-        </body></html>
-      `);
+    async function adicionarAnime() {
+      const nome = document.getElementById('anime-nome').value;
+      const imagem = document.getElementById('anime-imagem').value;
+      const video = document.getElementById('anime-video').value;
+
+      const response = await fetch('animes.json');
+      const animes = await response.json();
+      animes.push({ nome, imagem, video });
+
+      await fetch('salvar.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(animes)
+      });
+
+      carregarAnimes();
     }
 
-    function filtrarAnimes() {
-      const termo = document.getElementById("search").value.toLowerCase();
-      const filtrados = animes.filter(anime => anime.nome.toLowerCase().includes(termo));
-      renderizarAnimes(filtrados);
-    }
-
-    renderizarAnimes(animes);
+    window.onload = carregarAnimes;
   </script>
-
 </body>
 </html>
-
