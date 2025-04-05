@@ -35,6 +35,8 @@
     .anime-card img {
       width: 100%;
       border-radius: 10px;
+      height: 280px;
+      object-fit: cover;
     }
     .anime-card h3 {
       font-size: 16px;
@@ -59,39 +61,37 @@
 
 <header>AnimeFlix</header>
 
-<div class="catalogo" id="catalogo">
-  <!-- Animes vão aparecer aqui -->
-</div>
+<div class="catalogo" id="catalogo"></div>
 
 <script>
   const animes = [
     {
       titulo: "Konosuba",
-      imagem: "https://upload.wikimedia.org/wikipedia/en/2/2d/KonoSuba_light_novel_vol_1_cover.jpg",
+      imagem: "https://upload.wikimedia.org/wikipedia/en/4/4d/Konosuba_Anime_Season_1_Poster.jpg",
       genero: "Comédia, Fantasia",
       ano: "2016",
-      link: "https://www.example.com/konosuba"
+      link: "https://www.crunchyroll.com/pt-br/series/GYEXQKJG6/konosuba-gods-blessing-on-this-wonderful-world"
     },
     {
       titulo: "Kanojo, Okarishimasu",
-      imagem: "https://upload.wikimedia.org/wikipedia/en/5/5b/Rent-A-Girlfriend_volume_1_cover.jpg",
+      imagem: "https://upload.wikimedia.org/wikipedia/en/f/f4/Rent-A-Girlfriend_2020_Anime_Key_Visual.jpg",
       genero: "Romance, Comédia",
       ano: "2020",
-      link: "https://www.example.com/kanojo"
+      link: "https://www.crunchyroll.com/pt-br/series/GYUG7X1VY/rent-a-girlfriend"
     },
     {
       titulo: "Blue Box",
-      imagem: "https://upload.wikimedia.org/wikipedia/en/2/22/Blue_Box_manga_volume_1_cover.jpg",
+      imagem: "https://cdn.myanimelist.net/images/manga/3/259892.jpg",
       genero: "Esporte, Romance",
       ano: "2021",
-      link: "https://www.example.com/bluebox"
+      link: "https://www.viz.com/blue-box"
     },
     {
       titulo: "Hunter × Hunter",
-      imagem: "https://upload.wikimedia.org/wikipedia/en/9/9b/Hunter_Hunter_cover.gif",
+      imagem: "https://upload.wikimedia.org/wikipedia/en/3/3f/Hunter_Hunter_2011_key_visual.png",
       genero: "Ação, Aventura",
-      ano: "1999",
-      link: "https://www.example.com/hunterxhunter"
+      ano: "2011",
+      link: "https://www.crunchyroll.com/pt-br/series/G6NQ5DWZ6/hunter-x-hunter"
     }
   ];
 
