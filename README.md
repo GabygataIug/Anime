@@ -1,148 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR" dir="ltr" xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anime Finder</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><data:blog.pageTitle/></title>
+  
+  <!-- CSS Tema Escuro AnimeFlix -->
+  <style type="text/css">
+    :root {
+      --primary: #E50914;
+      --dark: #121212;
+      --dark-secondary: #1E1E1E;
+      --text: #FFFFFF;
+      --text-secondary: #AAAAAA;
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
 
-        h1 {
-            text-align: center;
-            color: #333;
-        }
+    /* Header */
+    header {
+      background: var(--dark-secondary);
+      padding: 15px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
 
-        .anime-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-        }
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+      color: var(--primary);
+    }
 
-        .anime-card {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+    .menu a {
+      color: var(--text);
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: 500;
+    }
 
-        .anime-card h3 {
-            color: #333;
-        }
+    .search-bar input {
+      padding: 8px 15px;
+      border-radius: 20px;
+      border: none;
+      background: #333;
+      color: white;
+    }
 
-        .episodes-list {
-            margin-top: 20px;
-            list-style-type: none;
-            padding: 0;
-        }
+    /* Destaque */
+    .featured {
+      background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://via.placeholder.com/1920x600');
+      background-size: cover;
+      height: 60vh;
+      display: flex;
+      align-items: center;
+      padding: 0 5%;
+    }
 
-        .episode-item {
-            margin-bottom: 10px;
-        }
+    .featured-info h1 {
+      font-size: 3em;
+      margin: 0;
+    }
 
-        button {
-            background-color: #333;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
+    .featured-info p {
+      max-width: 600px;
+      color: var(--text-secondary);
+    }
 
-        button:hover {
-            background-color: #555;
-        }
-    </style>
+    .btn {
+      background: var(--primary);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    /* Catálogo */
+    .catalog {
+      padding: 30px 5%;
+    }
+
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+      border-left: 5px solid var(--primary);
+      padding-left: 10px;
+    }
+
+    .anime-list {
+      display: flex;
+      overflow-x: auto;
+      gap: 20px;
+      padding-bottom: 20px;
+    }
+
+    .anime-card {
+      background: var(--dark-secondary);
+      border-radius: 8px;
+      min-width: 200px;
+      transition: transform 0.3s;
+    }
+
+    .anime-card:hover {
+      transform: scale(1.05);
+    }
+
+    .anime-card img {
+      width: 100%;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .anime-info {
+      padding: 10px;
+    }
+
+    .anime-info h3 {
+      margin: 5px 0;
+      font-size: 16px;
+    }
+
+    .anime-info p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin: 5px 0;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--dark-secondary);
+      padding: 20px 5%;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    /* Responsivo */
+    @media (max-width: 768px) {
+      .menu {
+        display: none;
+      }
+      .featured-info h1 {
+        font-size: 2em;
+      }
+    }
+  </style>
 </head>
 <body>
+  <!-- Header -->
+  <header>
+    <div class="logo">ANIMEFLIX</div>
+    <nav class="menu">
+      <a href="#">Início</a>
+      <a href="#">Animes</a>
+      <a href="#">Filmes</a>
+      <a href="#">Lista</a>
+    </nav>
+    <div class="search-bar">
+      <input type="text" placeholder="Buscar animes..." />
+    </div>
+  </header>
 
-<div class="container">
-    <h1>Anime Finder</h1>
-    <div id="anime-list" class="anime-list"></div>
-</div>
+  <!-- Destaque -->
+  <section class="featured">
+    <div class="featured-info">
+      <h1>Attack on Titan: Final Season</h1>
+      <p>A batalha final pela humanidade chega ao fim. Assista agora ao clássico que definiu uma geração.</p>
+      <button class="btn">Assistir Agora</button>
+    </div>
+  </section>
 
-<script>
-// Dados simulados em JSON (animes e episódios)
-const animesData = [
-    {
-        "title": "Naruto",
-        "description": "Um jovem ninja busca reconhecimento e sonha em se tornar o Hokage, o líder de sua aldeia.",
-        "episodes": [
-            {
-                "title": "Episódio 1",
-                "videoUrl": "https://linkdoanime.com/episodio1.mp4"
-            },
-            {
-                "title": "Episódio 2",
-                "videoUrl": "https://linkdoanime.com/episodio2.mp4"
-            }
-        ]
-    },
-    {
-        "title": "One Piece",
-        "description": "Luffy e sua tripulação de piratas buscam o One Piece, o maior tesouro do mundo.",
-        "episodes": [
-            {
-                "title": "Episódio 1",
-                "videoUrl": "https://linkdoanime.com/episodio1.mp4"
-            },
-            {
-                "title": "Episódio 2",
-                "videoUrl": "https://linkdoanime.com/episodio2.mp4"
-            }
-        ]
-    }
-];
+  <!-- Catálogo -->
+  <section class="catalog">
+    <h2 class="section-title">Lançamentos Recentes</h2>
+    <div class="anime-list">
+      <div class="anime-card">
+        <img src="https://via.placeholder.com/200x300" alt="Demon Slayer" />
+        <div class="anime-info">
+          <h3>Demon Slayer</h3>
+          <p>11 episódios</p>
+        </div>
+      </div>
+      <div class="anime-card">
+        <img src="https://via.placeholder.com/200x300" alt="Jujutsu Kaisen" />
+        <div class="anime-info">
+          <h3>Jujutsu Kaisen</h3>
+          <p>24 episódios</p>
+        </div>
+      </div>
+      <div class="anime-card">
+        <img src="https://via.placeholder.com/200x300" alt="Chainsaw Man" />
+        <div class="anime-info">
+          <h3>Chainsaw Man</h3>
+          <p>12 episódios</p>
+        </div>
+      </div>
+      <div class="anime-card">
+        <img src="https://via.placeholder.com/200x300" alt="Vinland Saga" />
+        <div class="anime-info">
+          <h3>Vinland Saga</h3>
+          <p>24 episódios</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-// Função para exibir os animes
-function fetchAnimes() {
-    const animeListElement = document.getElementById('anime-list');
-    animeListElement.innerHTML = ''; // Limpa o conteúdo
+  <section class="catalog">
+    <h2 class="section-title">Populares</h2>
+    <div class="anime-list">
+      <div class="anime-card">
+        <img src="https://via.placeholder.com/200x300" alt="Naruto" />
+        <div class="anime-info">
+          <h3>Naruto Shippuden</h3>
+          <p>500 episódios</p>
+        </div>
+      </div>
+      <div class="anime-card">
+        <img src="https://via.placeholder.com/200x300" alt="One Piece" />
+        <div class="anime-info">
+          <h3>One Piece</h3>
+          <p>1000+ episódios</p>
+        </div>
+      </div>
+      <div class="anime-card">
+        <img src="https://via.placeholder.com/200x300" alt="Death Note" />
+        <div class="anime-info">
+          <h3>Death Note</h3>
+          <p>37 episódios</p>
+        </div>
+      </div>
+      <div class="anime-card">
+        <img src="https://via.placeholder.com/200x300" alt="Tokyo Revengers" />
+        <div class="anime-info">
+          <h3>Tokyo Revengers</h3>
+          <p>24 episódios</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    animesData.forEach(anime => {
-        const animeCard = document.createElement('div');
-        animeCard.classList.add('anime-card');
-
-        // Exibe o título e descrição
-        animeCard.innerHTML = `
-            <h3>${anime.title}</h3>
-            <p>${anime.description}</p>
-            <button onclick="showEpisodes('${anime.title}')">Ver Episódios</button>
-            <ul id="episodes-${anime.title}" class="episodes-list"></ul>
-        `;
-        animeListElement.appendChild(animeCard);
-    });
-}
-
-// Função para exibir os episódios de um anime
-function showEpisodes(title) {
-    const anime = animesData.find(anime => anime.title === title);
-    const episodesList = document.getElementById(`episodes-${title}`);
-    episodesList.innerHTML = ''; // Limpa a lista de episódios
-
-    anime.episodes.forEach(episode => {
-        const episodeItem = document.createElement('li');
-        episodeItem.classList.add('episode-item');
-        episodeItem.innerHTML = `<a href="${episode.videoUrl}" target="_blank">${episode.title}</a>`;
-        episodesList.appendChild(episodeItem);
-    });
-}
-
-// Carrega os animes assim que a página carregar
-window.onload = fetchAnimes;
-</script>
-
+  <!-- Footer -->
+  <footer>
+    <div class="footer-links">
+      <a href="#">Termos de Uso</a>
+      <a href="#">Política de Privacidade</a>
+      <a href="#">Contato</a>
+    </div>
+    <p>© 2023 AnimeFlix - Todos os direitos reservados.</p>
+  </footer>
 </body>
 </html>
