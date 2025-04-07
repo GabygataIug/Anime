@@ -189,7 +189,7 @@
     <h2 class="section-title">Lançamentos Recentes</h2>
     <div class="anime-list">
       <div class="anime-card">
-        <img src="https://via.placeholder.com/200x300" alt="Demon Slayer" />
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhr-o6wxmdsT5PNVxfDamZugSF-MSYzP3BpE8P9R0XfncQPV2MYDfxDZXq2R2hiPmKTbqZXOPi1pl_9kA1otwtNUu04WcKxHuxvUCSbUuacnQ0OHos1O0NKVobN96qwVfCtFqunsicHVUUnCDbrarQ0n_wi32E139NZiOyPYW5cmv2wIX1HsQQKdT9XbD1t/s1600/1000394009.jpg" alt="Demon Slayer" />
         <div class="anime-info">
           <h3>Demon Slayer</h3>
           <p>11 episódios</p>
