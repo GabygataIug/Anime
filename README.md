@@ -1,112 +1,147 @@
-
-<html lang="pt-BR">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AnimeFlix</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #141414;
-      color: white;
-    }
-    header {
-      background: #000;
-      padding: 20px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-      color: #e50914;
-    }
-    .catalogo {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: center;
-      padding: 20px;
-    }
-    .anime-card {
-      background: #1f1f1f;
-      width: 200px;
-      border-radius: 10px;
-      padding: 10px;
-    }
-    .anime-card img {
-      width: 100%;
-      border-radius: 10px;
-      height: 280px;
-      object-fit: cover;
-    }
-    .anime-card h3 {
-      font-size: 16px;
-      margin: 10px 0 5px;
-    }
-    .anime-card p {
-      color: #bbb;
-      font-size: 14px;
-      margin: 0 0 10px;
-    }
-    .anime-card a {
-      background: #e50914;
-      color: white;
-      padding: 5px 10px;
-      text-decoration: none;
-      border-radius: 5px;
-      display: inline-block;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime Finder</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .anime-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .anime-card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .anime-card h3 {
+            color: #333;
+        }
+
+        .episodes-list {
+            margin-top: 20px;
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .episode-item {
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #555;
+        }
+    </style>
 </head>
 <body>
 
-<header>AnimeFlix</header>
-
-<div class="catalogo" id="catalogo"></div>
+<div class="container">
+    <h1>Anime Finder</h1>
+    <div id="anime-list" class="anime-list"></div>
+</div>
 
 <script>
-  const animes = [
+// Dados simulados em JSON (animes e episódios)
+const animesData = [
     {
-      titulo: "Konosuba",
-      imagem: "https://upload.wikimedia.org/wikipedia/en/4/4d/Konosuba_Anime_Season_1_Poster.jpg",
-      genero: "Comédia, Fantasia",
-      ano: "2016",
-      link: "https://www.crunchyroll.com/pt-br/series/GYEXQKJG6/konosuba-gods-blessing-on-this-wonderful-world"
+        "title": "Naruto",
+        "description": "Um jovem ninja busca reconhecimento e sonha em se tornar o Hokage, o líder de sua aldeia.",
+        "episodes": [
+            {
+                "title": "Episódio 1",
+                "videoUrl": "https://linkdoanime.com/episodio1.mp4"
+            },
+            {
+                "title": "Episódio 2",
+                "videoUrl": "https://linkdoanime.com/episodio2.mp4"
+            }
+        ]
     },
     {
-      titulo: "Kanojo, Okarishimasu",
-      imagem: "https://upload.wikimedia.org/wikipedia/en/f/f4/Rent-A-Girlfriend_2020_Anime_Key_Visual.jpg",
-      genero: "Romance, Comédia",
-      ano: "2020",
-      link: "https://www.crunchyroll.com/pt-br/series/GYUG7X1VY/rent-a-girlfriend"
-    },
-    {
-      titulo: "Blue Box",
-      imagem: "https://cdn.myanimelist.net/images/manga/3/259892.jpg",
-      genero: "Esporte, Romance",
-      ano: "2021",
-      link: "https://www.viz.com/blue-box"
-    },
-    {
-      titulo: "Hunter × Hunter",
-      imagem: "https://upload.wikimedia.org/wikipedia/en/3/3f/Hunter_Hunter_2011_key_visual.png",
-      genero: "Ação, Aventura",
-      ano: "2011",
-      link: "https://www.crunchyroll.com/pt-br/series/G6NQ5DWZ6/hunter-x-hunter"
+        "title": "One Piece",
+        "description": "Luffy e sua tripulação de piratas buscam o One Piece, o maior tesouro do mundo.",
+        "episodes": [
+            {
+                "title": "Episódio 1",
+                "videoUrl": "https://linkdoanime.com/episodio1.mp4"
+            },
+            {
+                "title": "Episódio 2",
+                "videoUrl": "https://linkdoanime.com/episodio2.mp4"
+            }
+        ]
     }
-  ];
+];
 
-  let html = "";
-  animes.forEach(a => {
-    html += `
-      <div class="anime-card">
-        <img src="${a.imagem}" alt="${a.titulo}">
-        <h3>${a.titulo}</h3>
-        <p>${a.genero} - ${a.ano}</p>
-        <a href="${a.link}" target="_blank">Assistir</a>
-      </div>
-    `;
-  });
-  document.getElementById("catalogo").innerHTML = html;
+// Função para exibir os animes
+function fetchAnimes() {
+    const animeListElement = document.getElementById('anime-list');
+    animeListElement.innerHTML = ''; // Limpa o conteúdo
+
+    animesData.forEach(anime => {
+        const animeCard = document.createElement('div');
+        animeCard.classList.add('anime-card');
+
+        // Exibe o título e descrição
+        animeCard.innerHTML = `
+            <h3>${anime.title}</h3>
+            <p>${anime.description}</p>
+            <button onclick="showEpisodes('${anime.title}')">Ver Episódios</button>
+            <ul id="episodes-${anime.title}" class="episodes-list"></ul>
+        `;
+        animeListElement.appendChild(animeCard);
+    });
+}
+
+// Função para exibir os episódios de um anime
+function showEpisodes(title) {
+    const anime = animesData.find(anime => anime.title === title);
+    const episodesList = document.getElementById(`episodes-${title}`);
+    episodesList.innerHTML = ''; // Limpa a lista de episódios
+
+    anime.episodes.forEach(episode => {
+        const episodeItem = document.createElement('li');
+        episodeItem.classList.add('episode-item');
+        episodeItem.innerHTML = `<a href="${episode.videoUrl}" target="_blank">${episode.title}</a>`;
+        episodesList.appendChild(episodeItem);
+    });
+}
+
+// Carrega os animes assim que a página carregar
+window.onload = fetchAnimes;
 </script>
 
 </body>
