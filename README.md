@@ -30,7 +30,7 @@
       <button id="btnTranslate">Traduzir & Corrigir → Espanhol</button>
       <button id="btnCopy" class="secondary">Copiar Saída</button>
       <label style="margin-left:auto">
-        <input id="chkGrammar" type="checkbox" checked /> Aplicar correção gramatical (LanguageTool)
+        <input id="chkGrammar" type="checkbox" checked /> Aplicar correção gramatical
       </label>
     </div>
 
@@ -43,7 +43,7 @@
     </div>
 
     <div class="footer">
-      <strong>Observações:</strong> o serviço usa APIs públicas (LibreTranslate + LanguageTool). Em alguns navegadores ou redes essas chamadas podem ser bloqueadas por CORS (se der erro, eu te ensino a contornar). Uso gratuito e sujeito a limites.
+      <strong>Observações:</strong> o serviço usa APIs públicas com proxy CORS. Funciona direto no navegador local. Uso gratuito e sujeito a limites.
     </div>
   </div>
 
@@ -59,14 +59,9 @@ const chkGrammar = document.getElementById('chkGrammar');
 function setStatus(t) { status.innerText = t; }
 
 async function translateWithLibre(text, target='es') {
-  // LibreTranslate público (pode mudar no futuro)
-  const url = 'https://libretranslate.de/translate'; // endpoint público
-  const body = {
-    q: text,
-    source: 'auto',
-    target: target,
-    format: 'text'
-  };
+  // Usando proxy CORS
+  const url = 'https://corsproxy.io/?https://libretranslate.de/translate';
+  const body = { q: text, source: 'auto', target: target, format: 'text' };
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -78,22 +73,18 @@ async function translateWithLibre(text, target='es') {
 }
 
 async function grammarCheckWithLanguageTool(text, lang='es') {
-  // LanguageTool pública
-  const url = 'https://api.languagetool.org/v2/check';
+  const url = 'https://corsproxy.io/?https://api.languagetool.org/v2/check';
   const form = new URLSearchParams();
   form.append('text', text);
   form.append('language', lang);
-  // sugerir apenas 1 alternativa por match
   const res = await fetch(url, { method: 'POST', body: form });
   if (!res.ok) throw new Error('Erro na correção: ' + res.status);
   const j = await res.json();
-  return j; // objeto com "matches"
+  return j;
 }
 
 function applyLanguageToolCorrections(text, matches) {
-  // aplicamos substituições do final pro início pra não bagunçar offsets
   if (!matches || matches.length === 0) return text;
-  // ordenar por offset decrescente
   matches.sort((a,b) => (b.offset - a.offset));
   let t = text;
   for (const m of matches) {
@@ -121,7 +112,6 @@ btnTranslate.addEventListener('click', async () => {
         final = applyLanguageToolCorrections(translated, res.matches || []);
       } catch (e) {
         console.warn('LanguageTool falhou:', e);
-        // deixamos o texto traduzido caso a correção falhe
       }
     }
     outputText.value = final;
@@ -129,7 +119,7 @@ btnTranslate.addEventListener('click', async () => {
   } catch (err) {
     console.error(err);
     setStatus('Erro — veja console');
-    alert('Ocorreu um erro: ' + err.message + '\nSe for CORS, posso explicar como rodar localmente.');
+    alert('Ocorreu um erro: ' + err.message);
   }
 });
 
